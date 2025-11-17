@@ -11,3 +11,12 @@ El objetivo fue **clasificar y jerarquizar los destinos costeros del Ecuador** (
 - Integrar **IA generativa (GPT API)** para interpretar percepciones de clientes.
 
 
+## 📊 Metodología de análisis
+1. **Extracción de datos:**  
+   Scraping con `Selenium` y `BeautifulSoup` para obtener títulos, precios, puntuaciones, reseñas y servicios de alojamientos.
+2. **Procesamiento:**  
+   Limpieza con `pandas`, normalización de precios y puntuaciones, y creación de métricas por destino.
+3. **Análisis semántico:**  
+   Uso de la **API de OpenAI (GPT-4)** para evaluar hospitalidad y percepciones en reseñas.
+4. **Clasificación y ranking:**  
+   Ponderación de variables:
