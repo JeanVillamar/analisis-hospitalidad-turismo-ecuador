@@ -6,6 +6,24 @@
   <title>Dashboard Turístico de Ecuador</title>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <style>
+
+    .chart {
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 20px;
+        background: white;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        margin-top: 25px;
+        margin-bottom: 40px;
+        min-height: 450px; /* 🔥 evita que se colapsen */
+    }
+
+    section {
+      margin-bottom: 60px;
+    }
+
+
+
     body {
       font-family: 'Inter', Arial, sans-serif;
       background-color: #f8fafc;
@@ -89,24 +107,26 @@
 
   <main>
     <section>
-      <h2>Comparativa de Calificaciones Promedio</h2>
+      <h2>📊 Weighted Score por Destino</h2>
       <div id="scoreChart" class="chart"></div>
     </section>
 
     <section>
-      <h2>Precio Promedio por Noche (USD)</h2>
+      <h2>💰 Precio Promedio por Noche</h2>
       <div id="priceChart" class="chart"></div>
     </section>
 
     <section>
-      <h2>Relación entre Hoteles y Reseñas</h2>
+      <h2>📈 Relación entre Hoteles y Reseñas</h2>
       <div id="reviewsChart" class="chart"></div>
     </section>
+
 
     <section>
       <h2>Análisis Cualitativo (GPT)</h2>
       <div id="analisisGPT" class="analisis"></div>
     </section>
+    
   </main>
 
   <footer>
