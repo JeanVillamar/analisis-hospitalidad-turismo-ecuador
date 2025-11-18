@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Turístico de Ecuador</title>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <style>
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      background-color: #f8fafc;
+      margin: 0;
+      padding: 0;
+      color: #1e293b;
+    }
+    header {
+      background-color: #2563eb;
+      color: white;
+      text-align: center;
+      padding: 2rem 1rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+    header p {
+      margin: 0.5rem 0 0;
+      font-weight: 300;
+    }
+    main {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    section {
+      margin-bottom: 3rem;
+    }
+    h2 {
+      color: #0f172a;
+      border-left: 5px solid #2563eb;
+      padding-left: 10px;
+      margin-bottom: 1rem;
+    }
+    .chart {
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 1rem;
+      background: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .analisis {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 1rem;
+    }
+    .card {
+      background: white;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      border-left: 5px solid #2563eb;
+    }
+    .card h3 {
+      margin-top: 0;
+      color: #1e40af;
+      text-transform: capitalize;
+    }
+    .card p {
+      white-space: pre-line;
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.85rem;
+      color: #475569;
+      border-top: 1px solid #e2e8f0;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🌎 Dashboard Turístico de Ecuador</h1>
+    <p>Análisis de hospitalidad, precios y percepción turística basado en reseñas y modelos de IA (GPT)</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>Comparativa de Calificaciones Promedio</h2>
+      <div id="scoreChart" class="chart"></div>
+    </section>
+
+    <section>
+      <h2>Precio Promedio por Noche (USD)</h2>
+      <div id="priceChart" class="chart"></div>
+    </section>
+
+    <section>
+      <h2>Relación entre Hoteles y Reseñas</h2>
+      <div id="reviewsChart" class="chart"></div>
+    </section>
+
+    <section>
+      <h2>Análisis Cualitativo (GPT)</h2>
+      <div id="analisisGPT" class="analisis"></div>
+    </section>
+  </main>
+
+  <footer>
+    Dashboard generado por un análisis de ciencia de datos y modelos de IA · 2025
+  </footer>
+
+  <script>
+    // === Cargar el JSON ===
+    fetch("analisis_destinos.json")
+      .then(response => response.json())
+      .then(data => {
+        // === Gráfico 1: Weighted Score ===
+        const destinos = data.map(d => d.destino);
+        const weighted = data.map(d => d.weighted_score);
+        const hosp = data.map(d => d.pointService);
+
+        const scoreTrace = {
+          x: destinos,
+          y: weighted,
+          text: hosp.map(h => "Hospitalidad: " + h.toFixed(2)),
+          type: "bar",
+          marker: { color: hosp, colorscale: "Blues" },
+          textposition: "auto"
+        };
+        const scoreLayout = {
+          title: "🏖️ Weighted Score por Destino",
+          xaxis: { title: "Destino" },
+          yaxis: { title: "Calificación Promedio" },
+          paper_bgcolor: "#fff",
+          plot_bgcolor: "#fff",
+        };
+        Plotly.newPlot("scoreChart", [scoreTrace], scoreLayout, {responsive: true});
+
+        // === Gráfico 2: Precio Promedio ===
+        const priceTrace = {
+          x: destinos,
+          y: data.map(d => d.price_num),
+          type: "bar",
+          text: data.map(d => "$" + d.price_num.toFixed(2)),
+          marker: { color: "#f59e0b" },
+          textposition: "auto"
+        };
+        const priceLayout = {
+          title: "💰 Precio Promedio por Noche",
+          xaxis: { title: "Destino" },
+          yaxis: { title: "Precio (USD)" },
+          paper_bgcolor: "#fff",
+          plot_bgcolor: "#fff",
+        };
+        Plotly.newPlot("priceChart", [priceTrace], priceLayout, {responsive: true});
+
+        // === Gráfico 3: Reseñas vs Hoteles ===
+        const reviewsTrace = {
+          x: data.map(d => d.n_hoteles),
+          y: data.map(d => d.n_reviews),
+          text: destinos,
+          mode: "markers",
+          marker: {
+            size: data.map(d => d.weighted_score * 3),
+            color: "#3b82f6",
+            opacity: 0.7
+          }
+        };
+        const reviewsLayout = {
+          title: "📊 Relación entre Hoteles y Reseñas",
+          xaxis: { title: "Número de Hoteles" },
+          yaxis: { title: "Número de Reseñas" },
+          paper_bgcolor: "#fff",
+          plot_bgcolor: "#fff",
+        };
+        Plotly.newPlot("reviewsChart", [reviewsTrace], reviewsLayout, {responsive: true});
+
+        // === Bloques de análisis GPT ===
+        const analisisDiv = document.getElementById("analisisGPT");
+        data.forEach(d => {
+          const card = document.createElement("div");
+          card.className = "card";
+          card.innerHTML = `<h3>${d.destino}</h3><p>${d.analisis_gpt}</p>`;
+          analisisDiv.appendChild(card);
+        });
+      });
+  </script>
+
+</body>
+</html>
