@@ -39,18 +39,17 @@ from bs4 import BeautifulSoup
 #     "https://www.booking.com/searchresults.es.html?label=gen173nr-10CAQoggJCDGNpdHlfLTkzMjAxN0gKWARoQYgBAZgBM7gBF8gBDNgBA-gBAfgBAYgCAagCAbgCwNy3yAbAAgHSAiQzMDFiZjYzMy1iMjQxLTRmNjAtOWU4MC1lNDFhZjdmYTM0NTHYAgHgAgE&sid=61e6f1a6c7eaf8b23f09e670ece985e3%22++++++++++++++++%22&aid=304142&ss=Atacames%2C+Esmeraldas%2C+Ecuador&ssne=Manta&ssne_untouched=Manta&highlighted_hotels=1437824&lang=es&src=searchresults&dest_id=-924479&dest_type=city&ac_position=0&ac_click_type=b&ac_langcode=es&ac_suggestion_list_length=5&search_selected=true&search_pageview_id=d8869058509a022b&checkin=2025-12-06&checkout=2025-12-07&group_adults=2&no_rooms=1&group_children=0&nflt=price%3DUSD-150-max-1"
 # ]
 
-# Diccionario con las búsquedas
+# Diccionario con las búsquedas sáb, 13 dic — dom, 14 dic
 URLS_BUSQUEDA = {
     "Villamil Playas":"https://www.booking.com/searchresults.es.html?ss=villamil+playas&ssne=General+Villamil&ssne_untouched=General+Villamil&highlighted_hotels=1437824&efdco=1&label=gen173nr-10CAQoggJCDGNpdHlfLTkzMjAxN0gKWARoQYgBAZgBM7gBF8gBDNgBA-gBAfgBAYgCAagCAbgCwNy3yAbAAgHSAiQzMDFiZjYzMy1iMjQxLTRmNjAtOWU4MC1lNDFhZjdmYTM0NTHYAgHgAgE&sid=61e6f1a6c7eaf8b23f09e670ece985e3%22++++++++++++++++%22&aid=304142&lang=es&sb=1&src_elem=sb&src=searchresults&dest_id=9556342&dest_type=hotel&ac_position=0&ac_click_type=b&ac_langcode=es&ac_suggestion_list_length=5&search_selected=true&search_pageview_id=1fd93f009411257c4c51838f2eaaa5ed&ac_meta=GiAxZmQ5M2YwMDk0MTEyNTdjNGM1MTgzOGYyZWFhYTVlZCAAKAEyAmVzOg92aWxsYW1pbCBwbGF5YXNAAEoAUAA%3D&checkin=2025-12-13&checkout=2025-12-14&group_adults=2&no_rooms=1&group_children=0"
     ,"Salinas": "https://www.booking.com/searchresults.es.html?ss=Salinas%2C+Ruta+del+Sol%2C+Ecuador&ssne=General+Villamil&ssne_untouched=General+Villamil&highlighted_hotels=1437824&label=gen173nr-10CAQoggJCDGNpdHlfLTkzMjAxN0gKWARoQYgBAZgBM7gBF8gBDNgBA-gBAfgBAYgCAagCAbgCwNy3yAbAAgHSAiQzMDFiZjYzMy1iMjQxLTRmNjAtOWU4MC1lNDFhZjdmYTM0NTHYAgHgAgE&sid=61e6f1a6c7eaf8b23f09e670ece985e3%22++++++++++++++++%22&aid=304142&lang=es&sb=1&src_elem=sb&src=searchresults&dest_id=-932937&dest_type=city&ac_position=1&ac_click_type=b&ac_langcode=es&ac_suggestion_list_length=5&search_selected=true&search_pageview_id=a61dea2cd86636752bf56aabfedf141a&ac_meta=GiBhNjFkZWEyY2Q4NjYzNjc1MmJmNTZhYWJmZWRmMTQxYSABKAEyAmVzOgJzYUAASgBQAA%3D%3D&checkin=2025-12-13&checkout=2025-12-14&group_adults=2&no_rooms=1&group_children=0"
     ,"Montañita":"https://www.booking.com/searchresults.es.html?ss=Monta%C3%B1ita%2C+Ruta+del+Sol%2C+Ecuador&ssne=Salinas&ssne_untouched=Salinas&highlighted_hotels=1437824&label=gen173nr-10CAQoggJCDGNpdHlfLTkzMjAxN0gKWARoQYgBAZgBM7gBF8gBDNgBA-gBAfgBAYgCAagCAbgCwNy3yAbAAgHSAiQzMDFiZjYzMy1iMjQxLTRmNjAtOWU4MC1lNDFhZjdmYTM0NTHYAgHgAgE&sid=61e6f1a6c7eaf8b23f09e670ece985e3%22++++++++++++++++%22&aid=304142&lang=es&sb=1&src_elem=sb&src=searchresults&dest_id=-930965&dest_type=city&ac_position=0&ac_click_type=b&ac_langcode=es&ac_suggestion_list_length=5&search_selected=true&search_pageview_id=d2db52727df2afa30a065b4a4e113c73&ac_meta=GiBkMmRiNTI3MjdkZjJhZmEzMGEwNjViNGE0ZTExM2M3MyAAKAEyAmVzOgVtb250YUAASgBQAA%3D%3D&checkin=2025-12-13&checkout=2025-12-14&group_adults=2&no_rooms=1&group_children=0"
     , "Puerto Lopez":"https://www.booking.com/searchresults.es.html?ss=Puerto+L%C3%B3pez%2C+Ruta+del+Sol%2C+Ecuador&ssne=Monta%C3%B1ita&ssne_untouched=Monta%C3%B1ita&highlighted_hotels=1437824&label=gen173nr-10CAQoggJCDGNpdHlfLTkzMjAxN0gKWARoQYgBAZgBM7gBF8gBDNgBA-gBAfgBAYgCAagCAbgCwNy3yAbAAgHSAiQzMDFiZjYzMy1iMjQxLTRmNjAtOWU4MC1lNDFhZjdmYTM0NTHYAgHgAgE&sid=61e6f1a6c7eaf8b23f09e670ece985e3%22++++++++++++++++%22&aid=304142&lang=es&sb=1&src_elem=sb&src=searchresults&dest_id=-932301&dest_type=city&ac_position=0&ac_click_type=b&ac_langcode=es&ac_suggestion_list_length=5&search_selected=true&search_pageview_id=64dd2719b5ebb98f6a225d76d83efc0f&ac_meta=GiA2NGRkMjcxOWI1ZWJiOThmNmEyMjVkNzZkODNlZmMwZiAAKAEyAmVzOglwdWVydG8gbG9AAEoAUAA%3D&checkin=2025-12-13&checkout=2025-12-14&group_adults=2&no_rooms=1&group_children=0"
     , "Ayampe":"https://www.booking.com/searchresults.es.html?ss=Ayampe%2C+Ruta+del+Sol%2C+Ecuador&ssne=Puerto+L%C3%B3pez&ssne_untouched=Puerto+L%C3%B3pez&highlighted_hotels=1437824&label=gen173nr-10CAQoggJCDGNpdHlfLTkzMjAxN0gKWARoQYgBAZgBM7gBF8gBDNgBA-gBAfgBAYgCAagCAbgCwNy3yAbAAgHSAiQzMDFiZjYzMy1iMjQxLTRmNjAtOWU4MC1lNDFhZjdmYTM0NTHYAgHgAgE&sid=61e6f1a6c7eaf8b23f09e670ece985e3%22++++++++++++++++%22&aid=304142&lang=es&sb=1&src_elem=sb&src=searchresults&dest_id=-924536&dest_type=city&ac_position=1&ac_click_type=b&ac_langcode=es&ac_suggestion_list_length=5&search_selected=true&search_pageview_id=d8e1551c1e9d6ae5de9c96314ca96d19&ac_meta=GiBkOGUxNTUxYzFlOWQ2YWU1ZGU5Yzk2MzE0Y2E5NmQxOSABKAEyAmVzOgNheWFAAEoAUAA%3D&checkin=2025-12-13&checkout=2025-12-14&group_adults=2&no_rooms=1&group_children=0"
-    , "Manta":"https://www.booking.com/searchresults.es.html?ss=Manta&ssne=Manta&ssne_untouched=Manta&highlighted_hotels=1437824&efdco=1&label=gen173nr-10CAQoggJCDGNpdHlfLTkzMjAxN0gKWARoQYgBAZgBM7gBF8gBDNgBA-gBAfgBAYgCAagCAbgCwNy3yAbAAgHSAiQzMDFiZjYzMy1iMjQxLTRmNjAtOWU4MC1lNDFhZjdmYTM0NTHYAgHgAgE&sid=61e6f1a6c7eaf8b23f09e670ece985e3%22++++++++++++++++%22&aid=304142&lang=es&sb=1&src_elem=sb&src=searchresults&dest_id=-930612&dest_type=city&checkin=2026-01-01&checkout=2026-01-02&group_adults=2&no_rooms=1&group_children=0"
-    , "Atacames":"https://www.booking.com/searchresults.es.html?ss=Atacames&ssne=Atacames&ssne_untouched=Atacames&highlighted_hotels=1437824&efdco=1&label=gen173nr-10CAQoggJCDGNpdHlfLTkzMjAxN0gKWARoQYgBAZgBM7gBF8gBDNgBA-gBAfgBAYgCAagCAbgCwNy3yAbAAgHSAiQzMDFiZjYzMy1iMjQxLTRmNjAtOWU4MC1lNDFhZjdmYTM0NTHYAgHgAgE&sid=61e6f1a6c7eaf8b23f09e670ece985e3%22++++++++++++++++%22&aid=304142&lang=es&sb=1&src_elem=sb&src=searchresults&dest_id=-924479&dest_type=city&checkin=2025-11-15&checkout=2025-11-16&group_adults=2&no_rooms=1&group_children=0"    
+    , "Manta":"https://www.booking.com/searchresults.es.html?ss=Manta&ssne=Manta&ssne_untouched=Manta&highlighted_hotels=1437824&efdco=1&label=gen173nr-10CAQoggJCDGNpdHlfLTkzMjAxN0gKWARoQYgBAZgBM7gBF8gBDNgBA-gBAfgBAYgCAagCAbgCwNy3yAbAAgHSAiQzMDFiZjYzMy1iMjQxLTRmNjAtOWU4MC1lNDFhZjdmYTM0NTHYAgHgAgE&sid=61e6f1a6c7eaf8b23f09e670ece985e3%22++++++++++++++++%22&aid=304142&lang=es&sb=1&src_elem=sb&src=searchresults&dest_id=-930612&dest_type=city&checkin=2025-12-13&checkout=2025-12-14&group_adults=2&no_rooms=1&group_children=0"
+    , "Atacames":"https://www.booking.com/searchresults.es.html?ss=Atacames&ssne=Atacames&ssne_untouched=Atacames&highlighted_hotels=1437824&efdco=1&label=gen173nr-10CAQoggJCDGNpdHlfLTkzMjAxN0gKWARoQYgBAZgBM7gBF8gBDNgBA-gBAfgBAYgCAagCAbgCwNy3yAbAAgHSAiQzMDFiZjYzMy1iMjQxLTRmNjAtOWU4MC1lNDFhZjdmYTM0NTHYAgHgAgE&sid=61e6f1a6c7eaf8b23f09e670ece985e3%22++++++++++++++++%22&aid=304142&lang=es&sb=1&src_elem=sb&src=searchresults&dest_id=-924479&dest_type=city&checkin=2025-12-13&checkout=2025-12-14&group_adults=2&no_rooms=1&group_children=0"    
 
 }
-
 #
 
 # --- Constantes de Tiempos de Espera (en segundos) ---
@@ -200,7 +199,8 @@ def scrape_detail_page_data(driver: webdriver.Chrome) -> dict:
         "description": "Descripción no disponible",
         "location": "Ubicación (lat,lng) no disponible",
         "services": "Servicios no disponibles",
-        "pointService": "Puntaje de Servicios no disponibles"
+        "pointService": "Puntaje de Servicios no disponibles",
+        "nreviews": 0
     }
 
     # Espera a que el elemento de descripción esté presente
@@ -243,6 +243,18 @@ def scrape_detail_page_data(driver: webdriver.Chrome) -> dict:
                 puntuacion = match.group(1).replace(",", ".")  # convertir coma a punto si quieres float
                 detail_data["pointService"] = puntuacion
                 print(puntuacion)
+
+        # Busca el div que contenga algo tipo "25 comentarios"
+        comments_div = detail_soup.find("div", string=re.compile(r"comentario"))
+
+        cantidad = None
+        if comments_div:
+            text = comments_div.get_text(strip=True)
+            match = re.search(r"(\d+)", text)
+            if match:
+                cantidad = int(match.group(1))
+                detail_data["nreviews"] = cantidad
+
 
 
 
